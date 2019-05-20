@@ -2,14 +2,13 @@
 #include<wiringPi.h>
 
 class Motor{
-
 	int stepsPerMilimeter;
 	int pinA;
 	int pinB;
 	int pinC;
 	int pinD;
 	int dir;
-	int step;
+	int _step;
 	const int sequence[8][4]{
 		{1,0,0,0},
 		{1,1,0,0},
@@ -22,7 +21,7 @@ class Motor{
 	};
 public:
 	Motor(int pinA, int pinB, int pinC, int pinD, int stepsPerMilimeter){
-		step=0;
+		_step=0;
 		dir=1;
 		this->pinA=pinA;
 		this->pinB=pinB;
