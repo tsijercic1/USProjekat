@@ -2,6 +2,7 @@
 
 #include<thread>
 #include<cmath>
+#include<iostream>
 #include"motor.h"
 #include"point.h"
 
@@ -18,6 +19,11 @@
     - Predznak ThreadData::distance govori motoru u kojem smjeru da se okrece. ThreadData::speed
     je procenat brzine motora ogranicen (0, 1]. ThreadData::run je kontrolna varijabla koja pokazuje
     trenutno stanje motora: run se koristi da se pokrene motor, thread ne radi nista s motorom ako !run;
+
+    Koristeno za testiranje ponasanja threadova:
+        using namespace std::literals::chrono_literals;
+        std::cout << "threadID: " << std::this_thread::get_id() << std::endl;
+        std::this_thread::sleep_for(2s);
 
 */
 
@@ -37,9 +43,10 @@ class Head {
     Point currentPosition;
     bool isLowered;
     ThreadData threadData[3];
+    bool headActive;
 
     void motorThread(ThreadData data) {
-        while(true) {
+        while(headActive) {
             if(data.run) {
                 double steps = std::abs(data.distance) * data.motor->getStepsPerMilimeter();
                 int dir = std::abs(data.distance);
@@ -97,15 +104,15 @@ public:
         threadData[1] = {&yAxis, 0, 1, false};
         threadData[2] = {&zAxis, 0, 1, false};
         isLowered = false;
+        headActive = true;
 
         std::thread xAxisThread(&Head::motorThread, this, threadData[0]);
         std::thread yAxisThread(&Head::motorThread, this, threadData[1]);
         std::thread zAxisThread(&Head::motorThread, this, threadData[2]);
 
-        // Pripazi kad ce se threadovi terminirati!!!
-        // xAxisThread.join();
-        // yAxisThread.join();
-        // zAxisThread.join();
+        xAxisThread.detach();
+        yAxisThread.detach();
+        zAxisThread.detach();
     }
 
     bool isAvailable() {
@@ -130,4 +137,7 @@ public:
         move(target);
     }
 
+    ~Head() {
+        headActive = false;
+    }
 };
