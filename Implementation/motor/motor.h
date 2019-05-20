@@ -1,9 +1,9 @@
-#ifndef motor_H
-#define motor_H
+#pragma once
 #include<wiringPi.h>
 
 class Motor{
 
+	int stepsPerMilimeter;
 	int pinA;
 	int pinB;
 	int pinC;
@@ -21,13 +21,14 @@ class Motor{
 		{1,0,0,1}
 	};
 public:
-	Motor(int pinA, int pinB, int pinC, int pinD){
+	Motor(int pinA, int pinB, int pinC, int pinD, int stepsPerMilimeter){
 		step=0;
 		dir=1;
 		this->pinA=pinA;
 		this->pinB=pinB;
 		this->pinC=pinC;
 		this->pinD=pinD;
+		this->stepsPerMilimeter=stepsPerMilimeter;
 		wiringPiSetupPhys();//use physical numbering for pins
 		pinMode(this->pinA,OUTPUT);
 		pinMode(this->pinB,OUTPUT);
@@ -35,8 +36,12 @@ public:
 		pinMode(this->pinD,OUTPUT);
 	}
 	
-	void write(int d);
+	void step(int d);
 
+	int getStepsPerMilimeter(){
+		return stepsPerMilimeter;
+	}
+	
 	~Motor(){
 		digitalWrite(pinA,0);
 		digitalWrite(pinB,0);
@@ -44,6 +49,5 @@ public:
 		digitalWrite(pinD,0);
 	}
 
-};
 
-#endif
+};
