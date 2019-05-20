@@ -25,20 +25,20 @@ constexpr double stepsPerMilimeter = 4096*2.0;
 constexpr double penLiftDistance = 20;
 constexpr double motorMaxSpeed = 680;
 
-struct ThreadData {
-    Motor* motor = nullptr;
-    double distance = 0;
-    double speed = 1;
-    bool run = false;
-};
-
 class Head {
+    struct ThreadData {
+        Motor* motor = nullptr;
+        double distance = 0;
+        double speed = 1;
+        bool run = false;
+    };
+
     Motor xAxis, yAxis, zAxis;
     Point currentPosition;
     bool isLowered;
     ThreadData threadData[3];
 
-    void motorThread(ThreadData &data) {
+    void motorThread(ThreadData data) {
         while(true) {
             if(data.run) {
                 double steps = std::abs(data.distance) * data.motor->getStepsPerMilimeter();
@@ -98,9 +98,9 @@ public:
         threadData[2] = {&zAxis, 0, 1, false};
         isLowered = false;
 
-        std::thread xAxisThread(motorThread, threadData[0]);
-        std::thread yAxisThread(motorThread, threadData[1]);
-        std::thread zAxisThread(motorThread, threadData[2]);
+        std::thread xAxisThread(&Head::motorThread, this, threadData[0]);
+        std::thread yAxisThread(&Head::motorThread, this, threadData[1]);
+        std::thread zAxisThread(&Head::motorThread, this, threadData[2]);
 
         // Pripazi kad ce se threadovi terminirati!!!
         // xAxisThread.join();
