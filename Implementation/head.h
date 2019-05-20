@@ -10,7 +10,7 @@
     penLiftDistance - visina na koju se podigne olovka u mm.
     motorMaxSpeed - 680 je broj stepova za koje motor ima max speed na 12V
     
-    - Kod raise i lower metoda, prvo se ceka da se zavrsi vertikalno kretanje olovke,
+    - Kod lineTo i moveTo metoda, prvo se ceka da se zavrsi vertikalno kretanje olovke,
     pa se tek onda vrsi kretanje po canvasu. Pozitivni smjer motora je u smjeru olovke,
     tj. prema dole, pa kad se threadData[2].distance postavi na +, to je spustanje, a -
     podizanje olovke.
