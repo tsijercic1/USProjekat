@@ -13,7 +13,7 @@
     
     - Kod lineTo i moveTo metoda, prvo se ceka da se zavrsi vertikalno kretanje olovke,
     pa se tek onda vrsi kretanje po canvasu. Pozitivni smjer motora je u smjeru olovke,
-    tj. prema dole, pa kad se threadData[2].distance postavi na +, to je spustanje, a -
+    tj. prema dole, pa kad se threadData[2].distance postavi na -, to je spustanje, a +
     podizanje olovke.
 
     - Predznak ThreadData::distance govori motoru u kojem smjeru da se okrece. ThreadData::speed
@@ -82,13 +82,13 @@ class Head {
     }
 
     void raise() {
-        threadData[2].distance = isLowered ? -penLiftDistance : 0;
+        threadData[2].distance = isLowered ? penLiftDistance : 0;
         isLowered = false;
         threadData[2].run = true;
     }
 
     void lower() {
-        threadData[2].distance = isLowered ? 0 : penLiftDistance;
+        threadData[2].distance = isLowered ? 0 : -penLiftDistance;
         isLowered = true;
         threadData[2].run = true;
     }
@@ -97,7 +97,7 @@ public:
     Head() :
         xAxis(7, 11, 13, 15, stepsPerMilimeter),
         yAxis(33, 35, 37, 39, stepsPerMilimeter),
-        zAxis(36, 40, 42, 44, stepsPerMilimeter),
+        zAxis(32, 36, 38, 40, stepsPerMilimeter),
         currentPosition(0, 0)
     {
         threadData[0] = {&xAxis, 0, 1, false};
@@ -135,6 +135,10 @@ public:
         raise();
         while(threadData[2].run);
         move(target);
+    }
+
+    Point getPosition() {
+        return currentPosition;
     }
 
     ~Head() {

@@ -3,14 +3,23 @@
 
 int main() {
     Interpreter interpreter;
+    Head head;
 
     std::string input;
     std::getline(std::cin, input);
 
-    std::vector<std::string> tokens = tokenize(input, ' ');
+    bool isDown = false;
+    while(true) {
+        if(head.isAvailable()) {
+            if(isDown)
+                head.moveTo(head.getPosition());
+            else
+                head.lineTo(head.getPosition());
 
-    for(std::string s : tokens) {
-        std::cout << "'" << s << "'" << std::endl;
+            isDown = !isDown;
+        }
+
+        std::cin.get();
     }
 
     return 0;

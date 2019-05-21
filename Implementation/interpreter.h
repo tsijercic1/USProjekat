@@ -28,6 +28,9 @@ class Interpreter {
 
 public:
     void interpret(std::string line) {
+        std::vector<std::string> tokens = tokenize(line, ' ');
         
+        
+
     }
 };
