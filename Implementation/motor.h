@@ -1,5 +1,5 @@
 #pragma once
-#include "wiringPi.h"
+#include<wiringPi.h>
 
 class Motor{
 	int stepsPerMilimeter;
@@ -36,7 +36,7 @@ public:
 	}
 	
 	void step(int d) {
-		if(d>0)dir=1;
+		if(d<=0)dir=1;
 		else dir=-1;
 		_step+=dir;
 		if(_step<0)_step=7;
