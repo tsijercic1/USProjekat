@@ -28,17 +28,17 @@
 */
 
 constexpr double stepsPerMilimeter = 6001.465;
-constexpr double penLiftDistance = 20;
+constexpr double penLiftDistance = 5;
 constexpr double motorMaxSpeed = 680;
 
-class Head {
-    struct ThreadData {
-        Motor* motor = nullptr;
-        double distance = 0;
-        double speed = 1;
-        bool run = false;
-    };
+struct ThreadData {
+    Motor* motor = nullptr;
+    double distance = 0;
+    double speed = 1;
+    bool run = false;
+};
 
+class Head {
     Motor xAxis, yAxis, zAxis;
     Point currentPosition;
     bool isLowered;
@@ -48,10 +48,9 @@ class Head {
     void motorThread(ThreadData *data) {
         while(headActive) {
             if(data->run) {
-                double steps = std::fabs(data->distance) * data->motor->getStepsPerMilimeter();
+                double steps = std::fabs(data->distance) * stepsPerMilimeter;
                 
                 double speed = (data->speed <= 0 || data->speed > 1) ? 1 : data->speed;
-                std::cout << "steps: " << steps << std::endl;
 
                 for(double i = 0; i < steps; i++) {
                     data->motor->step(data->distance);
@@ -66,9 +65,6 @@ class Head {
     void move(Point targetPosition) {
         double dx = targetPosition.x - currentPosition.x;
         double dy = targetPosition.y - currentPosition.y;
-        
-        std::cout << "distance x: " << dx << std::endl;
-        std::cout << "distance y: " << dy << std::endl;
         
         threadData[0].distance = dx;
         threadData[1].distance = dy;
@@ -90,9 +86,9 @@ class Head {
 
 public:
     Head() :
-        xAxis(7, 11, 13, 15, stepsPerMilimeter),
-        yAxis(31, 33, 35, 37, stepsPerMilimeter),
-        zAxis(32, 36, 38, 40, stepsPerMilimeter),
+        xAxis(7, 11, 13, 15),
+        yAxis(31, 33, 35, 37),
+        zAxis(32, 36, 38, 40),
         currentPosition(0, 0)
     {
         headActive = true;
@@ -129,23 +125,17 @@ public:
         if(!isAvailable())
             return;
         
-        std::cout << "Uso..." << std::endl;
-        
         raise();
         move(target);
     }
     
     void raise() {
-        if(!isAvailable()) {
-            std::cout << "not available" << std::endl;
+        if(!isAvailable())
             return;
-        }
                     
         threadData[2].distance = isLowered ? penLiftDistance : 0;
         threadData[2].run = true;
-        while(threadData[2].run) {
-            std::cout << "Ahite" << std::endl;
-        }
+        while(threadData[2].run);
         isLowered = false;
     }
 

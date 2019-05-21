@@ -20,15 +20,15 @@ class Motor{
 		{1,0,0,1}
 	};
 public:
-	Motor(int pinA, int pinB, int pinC, int pinD, int stepsPerMilimeter){
+	Motor(int pinA, int pinB, int pinC, int pinD){
 		_step=0;
 		dir=1;
 		this->pinA=pinA;
 		this->pinB=pinB;
 		this->pinC=pinC;
 		this->pinD=pinD;
-		this->stepsPerMilimeter=stepsPerMilimeter;
-		wiringPiSetupPhys();//use physical numbering for pins
+		// Use physical numbering for pins
+		wiringPiSetupPhys();
 		pinMode(this->pinA,OUTPUT);
 		pinMode(this->pinB,OUTPUT);
 		pinMode(this->pinC,OUTPUT);
@@ -45,10 +45,6 @@ public:
 		digitalWrite(pinB,sequence[_step][1]);
 		digitalWrite(pinC,sequence[_step][2]);
 		digitalWrite(pinD,sequence[_step][3]);
-	}
-
-	int getStepsPerMilimeter(){
-		return stepsPerMilimeter;
 	}
 	
 	~Motor(){
