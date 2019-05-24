@@ -41,7 +41,7 @@ public:
 	int getStepsPerMilimeter(){
 		return stepsPerMilimeter;
 	}
-	
+
 	~Motor(){
 		digitalWrite(pinA,0);
 		digitalWrite(pinB,0);
