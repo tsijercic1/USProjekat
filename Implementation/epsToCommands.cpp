@@ -2,28 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-
-class Command{
-    std::string commandName;
-    std::vector<double> values;
-    public:
-    Command(){
-        commandName="";
-    }
-    Command(const Command& command){
-        commandName=command.commandName;
-        values = command.values;
-    }
-    void addValue(double value){
-        values.push_back(value);
-    }
-    std::vector<double> getValues()const{
-        return values;
-    }
-    std::string getCommandName()const{
-        return commandName;
-    }
-};
+#include "Command.h"
 
 bool isValidCharacter(char character){
     if(character>='a' && character<='z' || character>='A' && character<='Z' 
@@ -32,8 +11,13 @@ bool isValidCharacter(char character){
 
     return false;
 }
+bool isDigit(char character){
+    if(character>='0' && character<='9')return true;
+    return false;
+}
 
 int main(){
+    std::vector<Command> commands;
     std::ifstream stream;
     std::string x;
     stream.open("./../DXF/b.eps",std::ifstream::in);
@@ -54,11 +38,30 @@ int main(){
     file.close();
     file.open("./../DXF/commands.txt",std::ofstream::out);
     stream.open("./../DXF/result.txt",std::ifstream::in);
-    double x,y;
-    std::string command;
+    double value;
+    std::string commandName;
     while(!stream.eof()){
-
+        Command command;
+        if(stream.peek()==10 || stream.peek()==32)stream.get();
+        
+        //std::cout<<(char)stream.peek()<<"--";
+        while(isDigit(stream.peek())){
+            stream>>value;
+            value/=2.8346457;
+            command.addValue(value);
+            if(stream.peek()==10 || stream.peek()==32)stream.get();
+        }
+        stream>>commandName;
+        command.setCommand(commandName);
+        commands.push_back(command);
     }
 
+    for(int i=0;i<commands.size();i++){
+        std::cout<<commands[i].getCommandName()<<" ";
+        for(double value : commands[i].getValues()){
+            std::cout<<value<<" ";
+        }
+        std::cout<<"\n";
+    }
     return 0;
 }
