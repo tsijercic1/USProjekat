@@ -2,6 +2,7 @@
 #include <string>
 #pragma once
 class Instruction{
+    private:
     std::string instructionName;
     std::vector<double> values;
     public:
@@ -12,6 +13,11 @@ class Instruction{
         instructionName=instruction.instructionName;
         values = instruction.values;
     }
+    
+    Instruction(Instruction&& instruction):instructionName(std::move(instruction.instructionName)),values(std::move(instruction.values)){};
+
+    Instruction& operator = (const Instruction& instruction) = default;
+
     void addValue(double value){
         values.push_back(value);
     }
@@ -21,7 +27,8 @@ class Instruction{
     std::string getInstructionName()const{
         return instructionName;
     }
-    void setInstruction(std::string instructionName){
-        instructionName=instructionName;
+    void setInstructionName(std::string instructionName){
+        this->instructionName=instructionName;
     }
+
 };
