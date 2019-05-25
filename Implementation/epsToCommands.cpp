@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include "Command.h"
+#include "instruction.h"
 
 bool isValidCharacter(char character){
     if(character>='a' && character<='z' || character>='A' && character<='Z' 
@@ -17,7 +17,7 @@ bool isDigit(char character){
 }
 
 int main(){
-    std::vector<Command> commands;
+    std::vector<Instruction> instructions;
     std::ifstream stream;
     std::string x;
     stream.open("./../DXF/b.eps",std::ifstream::in);
@@ -27,7 +27,7 @@ int main(){
         std::getline(stream,x);
     } 
 
-    std::string command;
+    std::string instruction;
     while(!stream.eof()){
         char temp = stream.get();
         if(isValidCharacter(temp)){
@@ -36,29 +36,29 @@ int main(){
     }
     stream.close();
     file.close();
-    file.open("./../DXF/commands.txt",std::ofstream::out);
+    file.open("./../DXF/instructions.txt",std::ofstream::out);
     stream.open("./../DXF/result.txt",std::ifstream::in);
     double value;
-    std::string commandName;
+    std::string instructionName;
     while(!stream.eof()){
-        Command command;
+        Instruction instruction;
         if(stream.peek()==10 || stream.peek()==32)stream.get();
         
         //std::cout<<(char)stream.peek()<<"--";
         while(isDigit(stream.peek())){
             stream>>value;
             value/=2.8346457;
-            command.addValue(value);
+            instruction.addValue(value);
             if(stream.peek()==10 || stream.peek()==32)stream.get();
         }
-        stream>>commandName;
-        command.setCommand(commandName);
-        commands.push_back(command);
+        stream>>instructionName;
+        instruction.setInstruction(instructionName);
+        instructions.push_back(instruction);
     }
 
-    for(int i=0;i<commands.size();i++){
-        std::cout<<commands[i].getCommandName()<<" ";
-        for(double value : commands[i].getValues()){
+    for(int i=0;i<instructions.size();i++){
+        std::cout<<instructions[i].getInstructionName()<<" ";
+        for(double value : instructions[i].getValues()){
             std::cout<<value<<" ";
         }
         std::cout<<"\n";
