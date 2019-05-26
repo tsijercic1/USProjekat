@@ -26,6 +26,7 @@ class Bezier{
         calculateCoefficients();
     }
     Bezier(const Bezier& bezier):Bezier(bezier.zero,bezier.one,bezier.two,bezier.three){}
+
     double getX(double t){
         if(t<0 || t>1)throw "Nekorektan parametar t!\n";
         return A.x*t*t*t+B.x*t*t+C.x*t+zero.x;
@@ -35,6 +36,8 @@ class Bezier{
         return A.y*t*t*t+B.y*t*t+C.y*t+zero.y;
     }
 
-
+    Point getPoint(double t){
+        return Point(getX(t),getY(t));
+    }
 
 };
