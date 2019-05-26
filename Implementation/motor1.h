@@ -46,7 +46,15 @@ public:
 		digitalWrite(pinC,sequence[_step][2]);
 		digitalWrite(pinD,sequence[_step][3]);
 	}
+<<<<<<< HEAD
 	
+=======
+
+	int getStepsPerMilimeter(){
+		return stepsPerMilimeter;
+	}
+
+>>>>>>> 34a2f75c1f91673e5ca0a1a70b5422c7396b9a14
 	~Motor(){
 		digitalWrite(pinA,0);
 		digitalWrite(pinB,0);
