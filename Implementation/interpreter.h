@@ -28,12 +28,12 @@ std::vector<std::string> tokenize(std::string str, char delimiter = ' ') {
 class Interpreter {
     Head head;
     const char* errorMessage;
-    void execute(const std::vector<Instruction> &instuctions);
-    void execute(const Instruction &instuction);
 public:
     Interpreter() : errorMessage("Komanda nije ispravnog formata!") {}
     void interpret(std::string line);
     void interpretFile(std::string filePath);
+    void execute(const std::vector<Instruction> &instuctions);
+    void execute(const Instruction &instuction);
 };
 
 void Interpreter::interpret(std::string line) {
@@ -69,7 +69,8 @@ void Interpreter::execute(const Instruction &instruction) {
     std::string name = instruction.getInstructionName();
     Point target;
     
-    if(name != "stroke") {
+    if(name == "moveto" || name == "lineto") {
+        std::cout << name;
         target.x = instruction.getValues()[0];
         target.y = instruction.getValues()[1];
     }
@@ -88,6 +89,7 @@ void Interpreter::execute(const Instruction &instruction) {
 
 void Interpreter::execute(const std::vector<Instruction> &instructions) {
     for(Instruction instruction : instructions) {
+        std::cout << "lol";
         execute(instruction);
     }
 }
