@@ -1,5 +1,5 @@
 #include<wiringPi.h>
-#include "motor.h"
+#include "CNC/motor.h"
 
 constexpr double stepsPermm = 4096*2.0;
 

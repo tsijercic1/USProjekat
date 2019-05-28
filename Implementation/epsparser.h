@@ -3,8 +3,8 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
-#include "instruction.h"
-#include "bezier.h"
+#include "CNC/instruction.h"
+#include "Geometry/bezier.h"
 #pragma once
 
 class EpsParser{
@@ -89,13 +89,13 @@ class EpsParser{
             instructions.push_back(instruction);
         }
         interpolate();
-        for(int i=0;i<instructions.size();i++){
-            std::cout<<instructions[i].getInstructionName()<<" - ";
-            for(double value : instructions[i].getValues()){
-                std::cout<<value<<" ";
-            }
-            std::cout<<"\n";
-        }
+//        for(int i=0;i<instructions.size();i++){
+//            std::cout<<instructions[i].getInstructionName()<<" - ";
+//            for(double value : instructions[i].getValues()){
+//                std::cout<<value<<" ";
+//            }
+//            std::cout<<"\n";
+//        }
         file.close();
         stream.close();
         remove("./result.txt");

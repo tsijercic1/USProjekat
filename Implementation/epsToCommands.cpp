@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include "instruction.h"
+#include "CNC/instruction.h"
 #include "epsparser.h"
 
 
