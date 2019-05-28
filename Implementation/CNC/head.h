@@ -132,24 +132,20 @@ bool Head::isAvailable() {
 }
 
 void Head::lineTo(Point target) {
-    if(!isAvailable())
-        return;
+    while(!isAvailable());
     lower();
     move(target);
 }
 
 void Head::moveTo(Point target){
-    if(!isAvailable())
-        return;
-
+    while(!isAvailable());
     raise();
     move(target);
 }
 
 void Head::raise() {
-    if(!isAvailable())
-        return;
-
+    while(!isAvailable());
+    
     threadData[2].distance = isLowered ? penLiftDistance : 0;
     threadData[2].run = true;
     while(threadData[2].run);
@@ -157,8 +153,7 @@ void Head::raise() {
 }
 
 void Head::lower()  {
-    if(!isAvailable())
-        return;
+    while(!isAvailable());
 
     threadData[2].distance = isLowered ? 0 : -penLiftDistance;
     threadData[2].run = true;
@@ -171,7 +166,6 @@ Point Head::getPosition(){
 }
 
 Head::~Head() {
-    while(!isAvailable());
     moveTo(Point());
     while(!isAvailable());
     headActive = false;

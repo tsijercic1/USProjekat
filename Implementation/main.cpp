@@ -79,11 +79,12 @@ int main() {
         }
     }*/
     
+    Interpreter iper;
+    
     std::string input;
     std::getline(std::cin, input);
-    
-    Interpreter iper;
-    iper.interpret(input);
+
+    iper.interpretFile(input);
     
     
     return 0;
