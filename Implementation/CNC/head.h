@@ -52,7 +52,7 @@ public:
     Head();
     bool isAvailable();
     void lineTo(Point target);
-    void moveTo(Point target)
+    void moveTo(Point target);
     void raise();
     void lower();
     Point getPosition();
@@ -105,6 +105,9 @@ void Head::motorThread(ThreadData *data)  {
 void Head::move(Point targetPosition) {
     double dx = targetPosition.x - currentPosition.x;
     double dy = targetPosition.y - currentPosition.y;
+    
+    currentPosition.x = targetPosition.x;
+    currentPosition.y = targetPosition.y;
 
     threadData[0].distance = dx;
     threadData[1].distance = dy;
@@ -171,6 +174,5 @@ Head::~Head() {
     while(!isAvailable());
     moveTo(Point());
     while(!isAvailable());
-
     headActive = false;
 }

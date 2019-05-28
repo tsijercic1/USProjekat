@@ -1,17 +1,12 @@
 #include<iostream>
 #include<string>
-//#include "interpreter.h"
-#include <dirent.h>
-#include <errno.h>
-#include <vector>
+#include "interpreter.h"
+//#include <dirent.h>
+//#include <errno.h>
+//#include <vector>
 #include "epsparser.h"
 
-
-struct Strakt{
-    double d;
-    char c;
-};
-
+/*
 int getdir (std::string dir, std::vector<std::string> &files)
 {
     DIR *dp;
@@ -26,7 +21,7 @@ int getdir (std::string dir, std::vector<std::string> &files)
     }
     closedir(dp);
     return 0;
-}
+}*/
 
 
 int main() {
@@ -48,6 +43,7 @@ int main() {
 //    }catch(const char* msg) {
 //        std::cout << msg << std::endl;
 //    }
+/*
     std::string dir = std::string("./../Import/");
     std::vector<std::string> files;
 
@@ -81,7 +77,14 @@ int main() {
                 std::cout << std::endl;
             }
         }
-
-    }
+    }*/
+    
+    std::string input;
+    std::getline(std::cin, input);
+    
+    Interpreter iper;
+    iper.interpret(input);
+    
+    
     return 0;
 }

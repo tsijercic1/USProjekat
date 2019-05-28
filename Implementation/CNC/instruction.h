@@ -18,7 +18,6 @@ class Instruction{
 };
 
 
-
 Instruction::Instruction(){
     instructionName="";
 }
