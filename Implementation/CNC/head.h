@@ -169,5 +169,8 @@ Point Head::getPosition(){
 
 Head::~Head() {
     while(!isAvailable());
+    moveTo(Point());
+    while(!isAvailable());
+
     headActive = false;
 }
