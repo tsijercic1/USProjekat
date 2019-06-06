@@ -14,14 +14,14 @@ class Polyline:public Shape{
     void convertToInstructions(){
         Instruction instruction;
         instruction.setInstructionName("moveto");
-        instruction.addValue(points[0].getX());
-        instruction.addValue(points[0].getY());
+        instruction.addValue(points[0].x);
+        instruction.addValue(points[0].y);
         instructions.push_back(instruction);
         for(int i=1;i<points.size();i++){
             Instruction instruction1;
             instruction1.setInstructionName("lineto");
-            instruction1.addValue(points[i].getX());
-            instruction1.addValue(points[i].getY());
+            instruction1.addValue(points[i].x);
+            instruction1.addValue(points[i].y);
             instructions.push_back(instruction1);
         }
         Instruction instruction2;
@@ -33,4 +33,7 @@ public:
         convertToInstructions();
     }
 
+    std::vector<Instruction> getInstructions(){
+        return instructions;
+    }
 };

@@ -5,6 +5,8 @@
 //#include <errno.h>
 //#include <vector>
 #include "epsparser.h"
+#include "./Geometry/circle.h"
+#include "./Geometry/polyline.h"
 
 /*
 int getdir (std::string dir, std::vector<std::string> &files)
@@ -80,13 +82,16 @@ int main() {
     }*/
     
     Interpreter iper;
-    
+    /*
     std::string input;
     std::getline(std::cin, input);
 
     iper.interpretFile(input);
-    
-    
+    */
+    //Circle a(Point(10,10) , 5);
+    //iper.execute(a.getInstructions());
+    Polyline a({Point(1,0),Point(1,1),Point(1,5),Point(5,5),Point(5,0),Point(0,0)});
+    iper.execute(a.getInstructions());
     
     return 0;
 }

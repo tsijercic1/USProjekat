@@ -29,7 +29,7 @@
 
 constexpr double stepsPerMilimeter = 6001.465;
 constexpr double penLiftDistance = 5;
-constexpr double motorMaxSpeed = 680;
+constexpr double motorMaxSpeed = 2000;
 
 struct ThreadData {
     Motor* motor = nullptr;
@@ -91,7 +91,7 @@ void Head::motorThread(ThreadData *data)  {
             double steps = std::fabs(data->distance) * stepsPerMilimeter;
 
             double speed = (data->speed <= 0 || data->speed > 1) ? 1 : data->speed;
-
+            std::cout<<"\n delta "<<data->distance<<" - ";
             for(double i = 0; i < steps; i++) {
                 data->motor->step(data->distance);
                 delayMicroseconds(motorMaxSpeed/speed);
@@ -109,7 +109,7 @@ void Head::move(Point targetPosition) {
     currentPosition.x = targetPosition.x;
     currentPosition.y = targetPosition.y;
 
-    threadData[0].distance = dx;
+    threadData[0].distance = -dx;
     threadData[1].distance = dy;
 
     dx = std::fabs(dx);

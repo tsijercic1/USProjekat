@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "shape.h"
 #include <vector>
 #include <cmath>
 #include "point.h"
@@ -38,14 +38,14 @@ Circle::Circle(Point center, double radius):center(center),radius(radius) {
         instructions.push_back(instruction);
     }
     {
-        Instruction instruction
+        Instruction instruction;
         instruction.setInstructionName("lineto");
         instruction.addValue(center.x + radius);
         instruction.addValue(center.y);
         instructions.push_back(instruction);
     }
     {
-        Instruction instruction
+        Instruction instruction;
         instruction.setInstructionName("stroke");
         instructions.push_back(instruction);
     }
