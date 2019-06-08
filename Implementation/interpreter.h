@@ -5,7 +5,6 @@
 #include "CNC/head.h"
 #include "epsparser.h"
 
-
 std::vector<std::string> tokenize(std::string str, char delimiter = ' ') {
     std::vector<std::string> tokens;
 
@@ -39,17 +38,19 @@ public:
 void Interpreter::interpret(std::string line) {
     std::vector<std::string> tokens(tokenize(line, ' '));
 
-    if(tokens.size() > 3)
+    if(tokens.size() <= 0 || tokens.size() > 3)
+            throw errorMessage;
+
+    try {
+        Instruction instruction;
+        instruction.addValue(std::stod(tokens[0]));
+        instruction.addValue(std::stod(tokens[1]));
+        instruction.setInstructionName(tokens[2]);
+        
+        execute(instruction);
+    }catch(...) {
         throw errorMessage;
-
-    std::vector<Instruction> commands(3);
-
-    Instruction instruction;
-    instruction.addValue(std::stod(tokens[0]));
-    instruction.addValue(std::stod(tokens[1]));
-    instruction.setInstructionName(tokens[2]);
-
-    execute(instruction);
+    }
 }
 
 void Interpreter::interpretFile(std::string filePath) {
@@ -66,6 +67,8 @@ void Interpreter::execute(const Instruction &instruction) {
     if(name == "moveto" || name == "lineto") {
         target.x = instruction.getValues()[0];
         target.y = instruction.getValues()[1];
+    } else {
+        target = head.getPosition();
     }
     
     if(head.isAvailable()) {

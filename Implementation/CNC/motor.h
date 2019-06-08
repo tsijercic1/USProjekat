@@ -28,7 +28,6 @@ public:
 
 void Motor::step(double d)
 {
-    // std::cout<<"\n"<<pinA<<" "<<pinB<<" "<<pinC<<" "<<pinD<<"++step++\n"<<sequence[_step][0]<<sequence[_step][1]<<sequence[_step][2]<<sequence[_step][3]<<"\n";
     if(d<=0)dir=1;
     else dir=-1;
     _step+=dir;

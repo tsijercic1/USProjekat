@@ -9,7 +9,7 @@
 /*
     ***Notes***
     penLiftDistance - visina na koju se podigne olovka u mm.
-    motorMaxSpeed - 680 je broj stepova za koje motor ima max speed na 12V
+    motorMaxSpeed - 680 je broj stepova za koje motor ima max speed na 12V, 2000 je default
     
     - Kod lineTo i moveTo metoda, prvo se ceka da se zavrsi vertikalno kretanje olovke,
     pa se tek onda vrsi kretanje po canvasu. Pozitivni smjer motora je u smjeru olovke,
@@ -18,7 +18,7 @@
 
     - Predznak ThreadData::distance govori motoru u kojem smjeru da se okrece. ThreadData::speed
     je procenat brzine motora ogranicen (0, 1]. ThreadData::run je kontrolna varijabla koja pokazuje
-    trenutno stanje motora: run se koristi da se pokrene motor, thread ne radi nista s motorom ako !run;
+    trenutno stanje motora; run se koristi da se pokrene motor, thread ne radi nista s motorom ako !run;
 
     Koristeno za testiranje ponasanja threadova:
         using namespace std::literals::chrono_literals;

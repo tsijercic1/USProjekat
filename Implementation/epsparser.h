@@ -68,38 +68,25 @@ class EpsParser{
         }
         stream.close();
         file.close();
-        //file.open("./instructions.txt",std::ofstream::out);
         stream.open("./result.txt",std::ifstream::in);
         double value;
         std::string instructionName;
         while(!stream.eof()){
-            
             Instruction instruction;
-            //if(stream.peek()==10 || stream.peek()==32)std::cout<<stream.get();
-            
             while(isDigit(stream.peek())){
                 stream>>value;
                 value/=2.8346457;
                 instruction.addValue(value);
                 if(stream.peek()==10 || stream.peek()==32)stream.get();
             }
-            // stream>>instructionName;
             std::getline(stream,instructionName);
             instruction.setInstructionName(instructionName);
             instructions.push_back(instruction);
         }
         interpolate();
-//        for(int i=0;i<instructions.size();i++){
-//            std::cout<<instructions[i].getInstructionName()<<" - ";
-//            for(double value : instructions[i].getValues()){
-//                std::cout<<value<<" ";
-//            }
-//            std::cout<<"\n";
-//        }
         file.close();
         stream.close();
         remove("./result.txt");
-        // remove("./instructions.txt");
     }
 
     std::vector<Instruction> getInstructions()const{
