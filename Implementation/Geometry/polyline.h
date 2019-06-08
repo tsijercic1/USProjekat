@@ -5,9 +5,10 @@
 #include <vector>
 #include "point.h"
 #include "../CNC/instruction.h"
+#include "shape.h"
 #include <initializer_list>
 
-class Polyline:public Shape{
+class Polyline : public Shape{
     std::vector<Point> points;
     std::vector<Instruction> instructions;
 
@@ -30,6 +31,10 @@ class Polyline:public Shape{
     }
 public:
     Polyline(std::initializer_list<Point> points):points(points){
+        convertToInstructions();
+    }
+    
+    Polyline(std::vector<Point> points):points(points){
         convertToInstructions();
     }
 

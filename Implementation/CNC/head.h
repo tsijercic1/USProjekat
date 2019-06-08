@@ -108,8 +108,6 @@ void Head::move(Point targetPosition) {
 
     threadData[0].distance = -dx;
     threadData[1].distance = dy;
-    
-    std::cout << "head - dx: " << threadData[0].distance << " dy: " << threadData[1].distance << std::endl;
 
     dx = std::fabs(dx);
     dy = std::fabs(dy);

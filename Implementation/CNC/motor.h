@@ -26,8 +26,7 @@ public:
 	~Motor();
 };
 
-void Motor::step(double d)
-{
+void Motor::step(double d) {
     if(d<=0)dir=1;
     else dir=-1;
     _step+=dir;
@@ -43,7 +42,7 @@ void Motor::delay(double milis) {
     delayMicroseconds(milis);
 }
 
-Motor::Motor(int pinA, int pinB, int pinC, int pinD){
+Motor::Motor(int pinA, int pinB, int pinC, int pinD) {
     _step=0;
     dir=1;
     this->pinA=pinA;
@@ -57,6 +56,7 @@ Motor::Motor(int pinA, int pinB, int pinC, int pinD){
     pinMode(this->pinC,OUTPUT);
     pinMode(this->pinD,OUTPUT);
 }
+
 Motor::~Motor() {
     digitalWrite(pinA,0);
     digitalWrite(pinB,0);

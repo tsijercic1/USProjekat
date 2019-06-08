@@ -11,7 +11,7 @@ class EpsParser{
     std::vector<Instruction> instructions;
     bool isValidCharacter(char character){
         if(character>='a' && character<='z' || character>='A' && character<='Z' 
-            || character>='0' && character<='9' || character=='-' || character == '\n' 
+            || character>='0' && character<='9' || character=='-' 
             || character==' ' || character=='+' || character=='.' )return true;
 
         return false;
@@ -48,7 +48,7 @@ class EpsParser{
         }
         instructions=newInstructions;
     }
-    public:
+public:
     EpsParser(std::string filePath){
         std::ifstream stream;
         std::string x;
@@ -58,35 +58,29 @@ class EpsParser{
         while(stream.peek()=='%' ){
             std::getline(stream,x);
         } 
-
-        std::string instruction;
+        
         while(!stream.eof()){
-            char temp = stream.get();
-            if(isValidCharacter(temp)){
-                file.put(temp);
+            std::getline(stream,x);
+            if(x != ""){
+                std::string s = x;
+                std::string delimiter = " ";
+                size_t pos = 0;
+                std::string token;
+                Instruction instruction;
+                while ((pos = s.find(delimiter)) != std::string::npos) {
+                    token = s.substr(0, pos);
+                    double value = std::stod(token);
+                    value/=2.8346457;
+                    instruction.addValue(value);
+                    s.erase(0, pos + delimiter.length());
+                }
+                instruction.setInstructionName(s);
+                instructions.push_back(instruction);
             }
         }
         stream.close();
         file.close();
-        stream.open("./result.txt",std::ifstream::in);
-        double value;
-        std::string instructionName;
-        while(!stream.eof()){
-            Instruction instruction;
-            while(isDigit(stream.peek())){
-                stream>>value;
-                value/=2.8346457;
-                instruction.addValue(value);
-                if(stream.peek()==10 || stream.peek()==32)stream.get();
-            }
-            std::getline(stream,instructionName);
-            instruction.setInstructionName(instructionName);
-            instructions.push_back(instruction);
-        }
         interpolate();
-        file.close();
-        stream.close();
-        remove("./result.txt");
     }
 
     std::vector<Instruction> getInstructions()const{
