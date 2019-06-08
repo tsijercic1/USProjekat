@@ -21,7 +21,7 @@ public:
 
 
 Circle::Circle(Point center, double radius):center(center),radius(radius) {
-    int numberOfSteps = 2 * 3.14159 * radius / 0.5;
+    int numberOfSteps = 3.14159 * radius;
     double step = 2 * 3.14159 / numberOfSteps;
     {
         Instruction instruction;

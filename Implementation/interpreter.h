@@ -55,12 +55,6 @@ void Interpreter::interpret(std::string line) {
 void Interpreter::interpretFile(std::string filePath) {
     EpsParser parser(filePath);
     for(Instruction element : parser.getInstructions()){
-        // print instruction        
-        std::cout<<element.getInstructionName()<<"\t";
-        if (element.getValues().size()>1) {
-            std::cout << element.getValues().at(0) << "\t" << element.getValues().at(1);
-        }
-        std::cout << std::endl;
         execute(element);
     }
 }
@@ -70,14 +64,12 @@ void Interpreter::execute(const Instruction &instruction) {
     Point target;
     
     if(name == "moveto" || name == "lineto") {
-        std::cout << name;
         target.x = instruction.getValues()[0];
         target.y = instruction.getValues()[1];
     }
     
     if(head.isAvailable()) {
-        std::cout << "Available..." << std::endl;
-        std::cout << "x: " << target.x << " y: " << target.y << std::endl;
+        std::cout << name << " - x: " << target.x << " y: " << target.y << std::endl;
         if(name == "lineto")
             head.lineTo(target);
         else
@@ -89,7 +81,6 @@ void Interpreter::execute(const Instruction &instruction) {
 
 void Interpreter::execute(const std::vector<Instruction> &instructions) {
     for(Instruction instruction : instructions) {
-        std::cout << "lol";
         execute(instruction);
     }
 }

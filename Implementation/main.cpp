@@ -88,10 +88,10 @@ int main() {
 
     iper.interpretFile(input);
     */
-    //Circle a(Point(10,10) , 5);
-    //iper.execute(a.getInstructions());
-    Polyline a({Point(1,0),Point(1,1),Point(1,5),Point(5,5),Point(5,0),Point(0,0)});
-    iper.execute(a.getInstructions());
+    // Circle a(Point(-5,0) , 5);
+    // iper.execute(a.getInstructions());
+    // Polyline a({Point(0,0),Point(0.463,1.6),Point(1.434,2.559),Point(3,3),Point(4.617,2.527),Point(5.445,1.737),Point(5.939,0.599),Point(5.864,-0.892),Point(5.126,-2.116),Point(3.692,-2.919),Point(2.235,-2.9),Point(0.849,-2.091),Point(0.211,-1.107),Point(0,0)});
+    // iper.execute(a.getInstructions());
     
     return 0;
 }

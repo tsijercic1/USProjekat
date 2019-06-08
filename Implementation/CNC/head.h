@@ -28,7 +28,7 @@
 */
 
 constexpr double stepsPerMilimeter = 6001.465;
-constexpr double penLiftDistance = 5;
+constexpr double penLiftDistance = 2;
 constexpr double motorMaxSpeed = 2000;
 
 struct ThreadData {
@@ -68,7 +68,8 @@ Head::Head() :
         currentPosition(0, 0)
 {
     headActive = true;
-
+    isLowered = false;
+    
     threadData[0] = {&xAxis, 0, 1, false};
     threadData[1] = {&yAxis, 0, 1, false};
     threadData[2] = {&zAxis, 0, 1, false};
@@ -80,9 +81,6 @@ Head::Head() :
     xAxisThread.detach();
     yAxisThread.detach();
     zAxisThread.detach();
-
-    isLowered = false;
-    raise();
 }
 
 void Head::motorThread(ThreadData *data)  {
@@ -91,10 +89,9 @@ void Head::motorThread(ThreadData *data)  {
             double steps = std::fabs(data->distance) * stepsPerMilimeter;
 
             double speed = (data->speed <= 0 || data->speed > 1) ? 1 : data->speed;
-            std::cout<<"\n delta "<<data->distance<<" - ";
-            for(double i = 0; i < steps; i++) {
+            for(unsigned long long int i = 0; i < steps; i++) {
                 data->motor->step(data->distance);
-                delayMicroseconds(motorMaxSpeed/speed);
+                data->motor->delay(motorMaxSpeed/speed);
             }
 
             data->run = false;
@@ -111,6 +108,8 @@ void Head::move(Point targetPosition) {
 
     threadData[0].distance = -dx;
     threadData[1].distance = dy;
+    
+    std::cout << "head - dx: " << threadData[0].distance << " dy: " << threadData[1].distance << std::endl;
 
     dx = std::fabs(dx);
     dy = std::fabs(dy);

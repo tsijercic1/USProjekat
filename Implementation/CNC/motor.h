@@ -1,9 +1,8 @@
 #pragma once
 #include<wiringPi.h>
-
+#include<iostream>
 
 class Motor{
-	int stepsPerMilimeter;
 	int pinA;
 	int pinB;
 	int pinC;
@@ -22,16 +21,14 @@ class Motor{
 	};
 public:
 	Motor(int pinA, int pinB, int pinC, int pinD);
-	
-	void step(int d);
-
-	int getStepsPerMilimeter();
-
+	void step(double d);
+	void delay(double milis);
 	~Motor();
 };
 
-void Motor::step(int d)
+void Motor::step(double d)
 {
+    // std::cout<<"\n"<<pinA<<" "<<pinB<<" "<<pinC<<" "<<pinD<<"++step++\n"<<sequence[_step][0]<<sequence[_step][1]<<sequence[_step][2]<<sequence[_step][3]<<"\n";
     if(d<=0)dir=1;
     else dir=-1;
     _step+=dir;
@@ -43,8 +40,8 @@ void Motor::step(int d)
     digitalWrite(pinD,sequence[_step][3]);
 }
 
-int Motor::getStepsPerMilimeter(){
-    return stepsPerMilimeter;
+void Motor::delay(double milis) {
+    delayMicroseconds(milis);
 }
 
 Motor::Motor(int pinA, int pinB, int pinC, int pinD){
