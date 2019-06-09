@@ -1,4 +1,8 @@
 Rijad Fejzić,18146,Konoha Squad
 20.05.2019 00:15,90,Pisanje specifikacije
 20.05.2019 13:30,10,Dorada specifikacije
+20.05.2019 22:30,180,Implementacija head.h
+21.05.2019 10:50,155, Prvo povezivanje CNC mašine sa RaspberryPi i prvo pokretanje. Popravljanje buggova u kodu.
+28.05.2019 15:00,90,Popravljanje grešaka u head klasi. Prepravljeno na apsolutne, a ne relativne koordinate. Popravljeno spuštanje i podizanje glave.
+
 

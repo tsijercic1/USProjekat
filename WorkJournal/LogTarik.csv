@@ -3,3 +3,8 @@ Tarik Sijerčić,18252,Konoha Squad
 19.05.2019 09:00,240,Sastavljanje konstrukcije za CNC mašinu
 19.05.2019 06:30,20,Postavljanje motora na konstrukciju CNC mašine
 20.05.2019 01:00,60,Crtanje sheme u Fritzing
+21.05.2019 10:50,155,Prvo povezivanje CNC mašine sa RaspberryPi i prvo pokretanje. Popravljanje buggova u kodu
+24.05.2019 23:45,110,Započeo implementaciju EPS parsera
+25.05.2019 ,60,Implementovao interpolaciju tačaka za krive. Završena implementacija EPS parsera.
+26.05.2019 ,,Popravljanje grešaka i refactoring koda.
+28.05.2019 15:00,90,Popravljanje grešaka u head klasi. Prepravljeno na apsolutne, a ne relativne koordinate. Popravljeno spuštanje i podizanje glave.
