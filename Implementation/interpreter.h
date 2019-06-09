@@ -45,7 +45,7 @@ std::string fileLoader() {
     if (!isFound)
         throw "File not found!";
     
-    return filename;
+    return dir+filename;
 }
 
 std::vector<std::string> tokenize(std::string str, char delimiter = ' ') {
@@ -103,7 +103,7 @@ void Interpreter::interpret(std::string line) {
             for(int i = 3; i < tokens.size(); i++) {
                 points.push_back(std::stod(tokens[i]));
             }
-            Polyline poly(points);
+            //Polyline poly(points);
         }else if(shapeName == "circle") {
         
         }else {
