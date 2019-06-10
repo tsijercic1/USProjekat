@@ -1,9 +1,10 @@
 Rijad Fejzić,18146,Konoha Squad
-20.05.2019 00:15,90,Pisanje specifikacije
-20.05.2019 13:30,10,Dorada specifikacije
-20.05.2019 22:30,180,Implementacija head.h
+20.05.2019 00:15,90,Pisanje specifikacije.
+20.05.2019 13:30,10,Dorada specifikacije.
+20.05.2019 22:30,180,Implementacija head.h.
 21.05.2019 10:50,155, Prvo povezivanje CNC mašine sa RaspberryPi i prvo pokretanje. Popravljanje buggova u kodu.
 28.05.2019 15:00,90,Popravljanje grešaka u head klasi. Prepravljeno na apsolutne, a ne relativne koordinate. Popravljeno spuštanje i podizanje glave.
 08.06.2019 09:00,360,Popravljen rad s kružnicama. Implementacija interpretera i dodatnih funkcionalnosti. Testiranje i pokušaj da se snjimi video. Popravljena greška u EPS parseru.
 09.06.2019 17:30,75,Istraživnanje i skidanje softvera za uređivanje videa. Započeto uređivanje videa za projekat.
 09.06.2019 22:00,20,Popravljanje funkcija u interpreteru.
+10.06.2019 19:15,105,Završavanje funkcionalnosti interpretera i dorađivanje UI-a. Refactoring.

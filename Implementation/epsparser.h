@@ -4,7 +4,7 @@
 #include <vector>
 #include <cmath>
 #include "CNC/instruction.h"
-#include "Geometry/bezier.h"
+#include "Geometry/arc.h"
 #pragma once
 
 class EpsParser{
@@ -26,21 +26,21 @@ class EpsParser{
             if(instructions[i].getInstructionName()=="curveto"){
                 double distance = sqrt(pow(instructions[i].getValues()[4]-instructions[i].getValues()[0],2)+pow(instructions[i].getValues()[5]-instructions[i].getValues()[1],2));
                 double step = 1./distance;
-                Bezier bezier(Point(newInstructions[newInstructions.size()-1].getValues()[0],newInstructions[newInstructions.size()-1].getValues()[1]),
+                Arc arc(Point(newInstructions[newInstructions.size()-1].getValues()[0],newInstructions[newInstructions.size()-1].getValues()[1]),
                                 Point(instructions[i].getValues()[0],instructions[i].getValues()[1]),
                                 Point(instructions[i].getValues()[2],instructions[i].getValues()[3]),
                                 Point(instructions[i].getValues()[4],instructions[i].getValues()[5]));
                 for(int j=1;j*step<1;j++){
                     Instruction instruction;
                     instruction.setInstructionName("lineto");
-                    instruction.addValue(bezier.getX(j*step));
-                    instruction.addValue(bezier.getY(j*step));
+                    instruction.addValue(arc.getX(j*step));
+                    instruction.addValue(arc.getY(j*step));
                     newInstructions.push_back(instruction);
                 }
                 Instruction instruction;
                 instruction.setInstructionName("lineto");
-                instruction.addValue(bezier.getX(1));
-                instruction.addValue(bezier.getY(1));
+                instruction.addValue(arc.getX(1));
+                instruction.addValue(arc.getY(1));
                 newInstructions.push_back(instruction);
             }else{
                 newInstructions.push_back(instructions[i]);

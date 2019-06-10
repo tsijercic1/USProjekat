@@ -4,10 +4,12 @@
 #include <string>
 #include <dirent.h>
 #include <errno.h>
-#include <vector>
-#include "CNC/head.h"
+
 #include "epsparser.h"
+#include "CNC/head.h"
 #include "Geometry/polyline.h"
+#include "Geometry/circle.h"
+#include "Geometry/arc.h"
 
 int getdir (std::string dir, std::vector<std::string> &files) {
     DIR *dp;
@@ -69,68 +71,134 @@ std::vector<std::string> tokenize(std::string str, char delimiter = ' ') {
 
 class Interpreter {
     Head head;
-    const char* errorMessage;
-public:
-    Interpreter() : errorMessage("Wrong command format!") {}
-    void interpret(std::string line);
-    void interpretInstruction(std::string line);
-    void interpretFile(std::string filePath);
+    const char* errMissingArguments;
+    const char* errUnkonwnCommand;
+    const char* errBadCommandFormat;
+    const char* errParsingDouble;
+    const char* errUnknownShape;
+
     void execute(const std::vector<Instruction> &instuctions);
     void execute(const Instruction &instuction);
+    void draw(std::vector<std::string> tokens);
+    std::vector<Point> extractPointsFromTokens(std::vector<std::string> tokens, int numOfPoints = -1);
+public:
+    Interpreter() :
+        errMissingArguments("Missing arguments!"),
+        errUnknownShape("Unknown shape!"),
+        errBadCommandFormat("Bad command format!"),
+        errUnkonwnCommand("Unknown command!"),
+        errParsingDouble("The entered value is not a number!") {}
+
+    void interpret(std::string str);
+    void interpretInstruction(std::string str);
+    void interpretFile(std::string filePath);
 };
 
-void Interpreter::interpret(std::string line) {
-    std::vector<std::string> tokens(tokenize(line, ' '));
+void Interpreter::interpret(std::string str) {
+    std::vector<std::string> tokens(tokenize(str));
     
     if(tokens.size() == 0)
-        throw errorMessage;
+        throw errMissingArguments;
     
     std::string command = tokens[0];
     
     if(command == "lineto" || command == "moveto") {
-        interpretInstruction(line);
+        interpretInstruction(str);
     }else if(command == "load") {
         std::string filename = fileLoader();
         interpretFile(filename);
     }else if(command == "draw") {
-        std::string shapeName = tokens[1];
-        
-        if(shapeName == "line") {
-            
-            // Napravi da se svake dvije tacke uzima point i dodaje u points, a ne double....
-            
-            std::vector<double> points;
-            for(int i = 3; i < tokens.size(); i++) {
-                points.push_back(std::stod(tokens[i]));
-            }
-            //Polyline poly(points);
-        }else if(shapeName == "circle") {
-        
-        }else {
-            throw "Unknown shape!";
-        }
-        
+        std::vector<std::string> drawTokens(tokens.begin()+1, tokens.end());
+        draw(drawTokens);
     }else {
-        throw "Unknown command!";
+        throw errUnkonwnCommand;
     }
 }
 
-void Interpreter::interpretInstruction(std::string line) {
-    std::vector<std::string> tokens(tokenize(line, ' '));
+void Interpreter::draw(std::vector<std::string> tokens) {
+    if(tokens.size() == 0)
+        throw errMissingArguments;
+    
+    std::string shapeName = tokens[0];
 
-    if(tokens.size() <= 0 || tokens.size() > 3)
-            throw errorMessage;
+    if(shapeName == "line") {
+        std::vector<std::string> pointTokens(tokens.begin()+1, tokens.end());
+        std::vector<Point> points = extractPointsFromTokens(pointTokens);
+
+        Polyline poly(points);
+        execute(poly.getInstructions());
+    }else if(shapeName == "circle") {
+        if(tokens.size() != 4)
+            throw errMissingArguments;
+        
+        double radius = 0;
+        try {
+            radius = std::stod(tokens[1]);
+        }catch(...) {
+            throw errParsingDouble;
+        }
+
+        if(radius <= 0)
+            throw errBadCommandFormat;
+        
+        std::vector<std::string> pointTokens(tokens.begin()+2, tokens.end());
+        std::vector<Point> points = extractPointsFromTokens(pointTokens, 1);
+        
+        Circle circle(points[0], radius);
+        execute(circle.getInstructions());
+    }else if(shapeName == "arc") {
+        std::vector<std::string> pointTokens(tokens.begin()+1, tokens.end());
+        std::vector<Point> points = extractPointsFromTokens(pointTokens, 4);
+
+        Arc arc(points[0],points[1], points[2], points[3]);
+        execute(arc.getInstructions());
+    }else {
+        throw errUnknownShape;
+    }
+}
+
+std::vector<Point> Interpreter::extractPointsFromTokens(std::vector<std::string> tokens, int numOfPoints) {
+    if(tokens.size() == 0)
+        throw errMissingArguments;
+
+    if(tokens.size() % 2 != 0)
+        throw errBadCommandFormat;
+    
+    int numOfCoords = numOfPoints == -1 ? tokens.size() : numOfPoints * 2;
+
+    if(numOfCoords != tokens.size())
+        throw errBadCommandFormat;
+    
+    std::vector<Point> points;
 
     try {
-        Instruction instruction;
+        for(int i = 1; i < numOfCoords; i+=2) {
+            double x = std::stod(tokens[i]);
+            double y = std::stod(tokens[i+1]);
+            points.push_back(Point(x, y));
+        }
+    }catch(...) {
+        throw errParsingDouble;
+    }
+
+    return points;
+}
+
+void Interpreter::interpretInstruction(std::string str) {
+    std::vector<std::string> tokens(tokenize(str, ' '));
+
+    if(tokens.size() <= 0 || tokens.size() > 3)
+            throw errBadCommandFormat;
+
+    Instruction instruction;
+    try {
         instruction.addValue(std::stod(tokens[0]));
         instruction.addValue(std::stod(tokens[1]));
         instruction.setInstructionName(tokens[2]);
-        
-        execute(instruction);
     }catch(...) {
-        throw errorMessage;
+        throw errParsingDouble;
     }
+    execute(instruction);
 }
 
 void Interpreter::interpretFile(std::string filePath) {
