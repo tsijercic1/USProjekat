@@ -10,3 +10,4 @@ Tarik Sijerčić,18252,Konoha Squad
 28.05.2019 15:00,90,Popravljanje grešaka u head klasi. Prepravljeno na apsolutne - a ne relativne koordinate. Popravljeno spuštanje i podizanje glave.
 08.06.2019 09:00,360,Popravljen rad s kružnicama. Implementacija interpretera i dodatnih funkcionalnosti. Testiranje i pokušaj da se snjimi video. Popravljena greška u EPS parseru.
 09.06.2019 11:00,450,Spremanje projekta i snjimanje videa za dokumentovanje.
+11.06.2019 09:10,20,implementovanje getInstructions u Arc i unapređivanje interpolacije.
