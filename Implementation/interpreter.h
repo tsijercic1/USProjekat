@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include <errno.h>
 
+#include "trim.h"
 #include "epsparser.h"
 #include "CNC/head.h"
 #include "Geometry/polyline.h"
