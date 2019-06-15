@@ -22,7 +22,7 @@ public:
     double getX(double t);
     double getY(double t);
     Point getPoint(double t);
-    std::vector<Instruction> Arc::getInstructions() {
+    std::vector<Instruction> getInstructions() {
         return instructions;
     }
 };

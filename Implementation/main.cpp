@@ -11,6 +11,7 @@ int main() {
     
     while(true) {
         try {
+            std::cout << ">> ";
             std::string input;
             std::getline(std::cin, input);
             trim(input);
