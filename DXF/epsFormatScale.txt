@@ -1,6 +1,0 @@
-%scale=2,8346457
-10  10  moveto
-10  20  lineto
-20  20  lineto
-20  30  lineto
-stroke

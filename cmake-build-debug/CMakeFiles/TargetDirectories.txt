@@ -1,2 +1,0 @@
-/home/tsijercic1/tsijercic1/USProjekat/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/tsijercic1/tsijercic1/USProjekat/cmake-build-debug/CMakeFiles/edit_cache.dir
