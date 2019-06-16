@@ -1,4 +1,5 @@
 Rijad Fejzić,18146,Konoha Squad
+Datum i vrijeme početka, Minuta rada, Šta je rađeno?
 20.05.2019 00:15,90,Pisanje specifikacije.
 20.05.2019 13:30,10,Dorada specifikacije.
 20.05.2019 22:30,180,Implementacija head.h.
@@ -8,4 +9,5 @@ Rijad Fejzić,18146,Konoha Squad
 09.06.2019 17:30,75,Istraživnanje i skidanje softvera za uređivanje videa. Započeto uređivanje videa za projekat.
 09.06.2019 22:00,20,Popravljanje funkcija u interpreteru.
 10.06.2019 19:15,105,Završavanje funkcionalnosti interpretera i dorađivanje UI-a. Refactoring.
-11.06.2019 09:10,20,implementovanje getInstructions u Arc i unapređivanje interpolacije.
+11.06.2019 09:10,20,Implementovanje getInstructions u Arc i unapređivanje interpolacije.
+Ukupno vremena provedeno: , 18 sati, 25 minuta
